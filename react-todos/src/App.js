@@ -4,6 +4,8 @@ import TodoTable from "./components/TodoTable";
 import NewTodoForm from "./components/NewTodoForm";
 
 function App() {
+  const [showAddTodoFOrm, setShowAddTodoForm] = useState(false);
+
   const [todos, setTodos] = useState([
     { rowNumber: 1, rowDescription: "Feed puppy", rowAssigned: "User One" },
     { rowNumber: 2, rowDescription: "Water plants", rowAssigned: "User Two" },
@@ -31,11 +33,11 @@ function App() {
   };
 
   const deleteTodo = (deleteTodoRowNumber) => {
-    let filtered = todos.filter(function(value){
+    let filtered = todos.filter(function (value) {
       return value.rowNumber !== deleteTodoRowNumber;
     });
     setTodos(filtered);
-  }
+  };
 
   return (
     <div className="mt-5 container">
@@ -43,10 +45,13 @@ function App() {
         <div className="card-header">Your Todo's</div>
         <div className="card-body">
           <TodoTable todos={todos} deleteTodo={deleteTodo} />
-          <button className="btn btn-primary">
-            Add new todo
+          <button
+            onClick={() => setShowAddTodoForm(!showAddTodoFOrm)}
+            className="btn btn-primary"
+          >
+           {showAddTodoFOrm ? `Close New Todo` : `New Todo`}
           </button>
-          <NewTodoForm addTodo={addTodo} />
+          {showAddTodoFOrm && <NewTodoForm addTodo={addTodo} />}
         </div>
       </div>
     </div>
